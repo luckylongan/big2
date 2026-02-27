@@ -36,6 +36,12 @@
             color: #be185d; /* pink-700 */
             font-weight: 700;
         }
+        /* Style for disabled tier rows */
+        .tier-disabled {
+            opacity: 0.5;
+            background-color: #f9fafb;
+            border-color: #e5e7eb;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -58,31 +64,46 @@
             
             <!-- Custom Card Multipliers Setup -->
             <div class="mb-6 border-t pt-4">
-                <label class="block text-sm font-bold text-gray-700 mb-2">🃏 自訂張數加倍門檻</label>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-                    <div class="flex items-center justify-between gap-1 bg-white border border-gray-200 p-2 rounded-lg shadow-sm hover:border-blue-300 transition">
-                        <span class="text-gray-600 font-medium whitespace-nowrap">達</span>
-                        <input type="number" id="tier1-cards" class="w-12 border border-gray-300 rounded p-1 text-center focus:ring-2 focus:ring-blue-400 outline-none" value="7" min="1" max="13">
+                <label class="block text-sm font-bold text-gray-700 mb-2">🃏 自訂張數加倍門檻 (可勾選啟用/停用)</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                    <!-- Tier 1 -->
+                    <div id="tier1-wrapper" class="flex items-center justify-between gap-1 bg-white border border-gray-200 p-2 rounded-lg shadow-sm hover:border-blue-300 transition">
+                        <input type="checkbox" id="tier1-active" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 cursor-pointer" checked onchange="toggleTierStyle(1)">
+                        <span class="text-gray-600 font-medium whitespace-nowrap ml-1">達</span>
+                        <input type="number" id="tier1-cards" class="w-14 border border-gray-300 rounded p-1 text-center font-bold focus:ring-2 focus:ring-blue-400 outline-none" value="7" min="1" max="13">
                         <span class="text-gray-600 font-medium whitespace-nowrap">張</span>
-                        <input type="number" id="tier1-mult" class="w-12 border border-gray-300 rounded p-1 text-center text-red-600 font-bold focus:ring-2 focus:ring-blue-400 outline-none" value="2" min="1">
+                        <input type="number" id="tier1-mult" class="w-14 border border-gray-300 rounded p-1 text-center text-red-600 font-bold focus:ring-2 focus:ring-blue-400 outline-none" value="2" min="1">
                         <span class="text-gray-600 font-medium whitespace-nowrap">倍</span>
                     </div>
-                    <div class="flex items-center justify-between gap-1 bg-white border border-gray-200 p-2 rounded-lg shadow-sm hover:border-blue-300 transition">
-                        <span class="text-gray-600 font-medium whitespace-nowrap">達</span>
-                        <input type="number" id="tier2-cards" class="w-12 border border-gray-300 rounded p-1 text-center focus:ring-2 focus:ring-blue-400 outline-none" value="10" min="1" max="13">
+                    <!-- Tier 2 -->
+                    <div id="tier2-wrapper" class="flex items-center justify-between gap-1 bg-white border border-gray-200 p-2 rounded-lg shadow-sm hover:border-blue-300 transition">
+                        <input type="checkbox" id="tier2-active" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 cursor-pointer" checked onchange="toggleTierStyle(2)">
+                        <span class="text-gray-600 font-medium whitespace-nowrap ml-1">達</span>
+                        <input type="number" id="tier2-cards" class="w-14 border border-gray-300 rounded p-1 text-center font-bold focus:ring-2 focus:ring-blue-400 outline-none" value="10" min="1" max="13">
                         <span class="text-gray-600 font-medium whitespace-nowrap">張</span>
-                        <input type="number" id="tier2-mult" class="w-12 border border-gray-300 rounded p-1 text-center text-red-600 font-bold focus:ring-2 focus:ring-blue-400 outline-none" value="4" min="1">
+                        <input type="number" id="tier2-mult" class="w-14 border border-gray-300 rounded p-1 text-center text-red-600 font-bold focus:ring-2 focus:ring-blue-400 outline-none" value="4" min="1">
                         <span class="text-gray-600 font-medium whitespace-nowrap">倍</span>
                     </div>
-                    <div class="flex items-center justify-between gap-1 bg-white border border-gray-200 p-2 rounded-lg shadow-sm hover:border-blue-300 transition">
-                        <span class="text-gray-600 font-medium whitespace-nowrap">達</span>
-                        <input type="number" id="tier3-cards" class="w-12 border border-gray-300 rounded p-1 text-center focus:ring-2 focus:ring-blue-400 outline-none" value="13" min="1" max="13">
+                    <!-- Tier 3 -->
+                    <div id="tier3-wrapper" class="flex items-center justify-between gap-1 bg-white border border-gray-200 p-2 rounded-lg shadow-sm hover:border-blue-300 transition">
+                        <input type="checkbox" id="tier3-active" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 cursor-pointer" checked onchange="toggleTierStyle(3)">
+                        <span class="text-gray-600 font-medium whitespace-nowrap ml-1">達</span>
+                        <input type="number" id="tier3-cards" class="w-14 border border-gray-300 rounded p-1 text-center font-bold focus:ring-2 focus:ring-blue-400 outline-none" value="13" min="1" max="13">
                         <span class="text-gray-600 font-medium whitespace-nowrap">張</span>
-                        <input type="number" id="tier3-mult" class="w-12 border border-gray-300 rounded p-1 text-center text-red-600 font-bold focus:ring-2 focus:ring-blue-400 outline-none" value="8" min="1">
+                        <input type="number" id="tier3-mult" class="w-14 border border-gray-300 rounded p-1 text-center text-red-600 font-bold focus:ring-2 focus:ring-blue-400 outline-none" value="8" min="1">
+                        <span class="text-gray-600 font-medium whitespace-nowrap">倍</span>
+                    </div>
+                    <!-- Tier 4 -->
+                    <div id="tier4-wrapper" class="flex items-center justify-between gap-1 bg-white border border-gray-200 p-2 rounded-lg shadow-sm hover:border-blue-300 transition tier-disabled">
+                        <input type="checkbox" id="tier4-active" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 cursor-pointer" onchange="toggleTierStyle(4)">
+                        <span class="text-gray-600 font-medium whitespace-nowrap ml-1">達</span>
+                        <input type="number" id="tier4-cards" class="w-14 border border-gray-300 rounded p-1 text-center font-bold focus:ring-2 focus:ring-blue-400 outline-none" value="0" min="0" max="13">
+                        <span class="text-gray-600 font-medium whitespace-nowrap">張</span>
+                        <input type="number" id="tier4-mult" class="w-14 border border-gray-300 rounded p-1 text-center text-red-600 font-bold focus:ring-2 focus:ring-blue-400 outline-none" value="16" min="1">
                         <span class="text-gray-600 font-medium whitespace-nowrap">倍</span>
                     </div>
                 </div>
-                <p class="text-xs text-gray-400 mt-2">* 系統會自動由最大張數開始判斷。如不需要多階層，可將倍數設為 1。</p>
+                <p class="text-xs text-gray-400 mt-2">* 系統會自動由最大張數開始判斷。取消勾選即可停用該規則。</p>
             </div>
 
             <label class="block text-sm font-bold text-gray-700 mb-2 mt-4 border-t pt-4">玩家名稱</label>
@@ -272,15 +293,31 @@
             }, 2000);
         }
 
+        function toggleTierStyle(tierNum) {
+            const isActive = document.getElementById(`tier${tierNum}-active`).checked;
+            const wrapper = document.getElementById(`tier${tierNum}-wrapper`);
+            if (isActive) {
+                wrapper.classList.remove('tier-disabled');
+            } else {
+                wrapper.classList.add('tier-disabled');
+            }
+        }
+
         function startGame() {
             globalBaseBet = parseInt(document.getElementById('base-bet').value) || 10;
             document.getElementById('display-base-bet').innerText = `底注: $${globalBaseBet}`;
 
-            globalCardMultipliers = [
-                { cards: parseInt(document.getElementById('tier1-cards').value) || 7, mult: parseInt(document.getElementById('tier1-mult').value) || 2 },
-                { cards: parseInt(document.getElementById('tier2-cards').value) || 10, mult: parseInt(document.getElementById('tier2-mult').value) || 4 },
-                { cards: parseInt(document.getElementById('tier3-cards').value) || 13, mult: parseInt(document.getElementById('tier3-mult').value) || 8 }
-            ].filter(t => t.cards <= 13 && t.mult > 1).sort((a, b) => b.cards - a.cards);
+            // Parse custom card multiplier rules based on checkboxes, sort them descending by card count
+            let tiers = [
+                { active: document.getElementById('tier1-active').checked, cards: parseInt(document.getElementById('tier1-cards').value) || 0, mult: parseInt(document.getElementById('tier1-mult').value) || 1 },
+                { active: document.getElementById('tier2-active').checked, cards: parseInt(document.getElementById('tier2-cards').value) || 0, mult: parseInt(document.getElementById('tier2-mult').value) || 1 },
+                { active: document.getElementById('tier3-active').checked, cards: parseInt(document.getElementById('tier3-cards').value) || 0, mult: parseInt(document.getElementById('tier3-mult').value) || 1 },
+                { active: document.getElementById('tier4-active').checked, cards: parseInt(document.getElementById('tier4-cards').value) || 0, mult: parseInt(document.getElementById('tier4-mult').value) || 1 }
+            ];
+
+            globalCardMultipliers = tiers
+                .filter(t => t.active && t.cards > 0 && t.mult > 1)
+                .sort((a, b) => b.cards - a.cards);
 
             const names = [
                 document.getElementById('p1-name').value.trim() || '玩家 1',
